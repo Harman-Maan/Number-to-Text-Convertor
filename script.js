@@ -45,7 +45,7 @@ function convert() {
       let numLast = numPart.match(/\d{1,2}$/)[0];
       result.unshift(i + 1 > 3 ? " " + places.inu[Math.floor((i + 1) / 3)] + " " : "");
       result.unshift(numLast < 19 ? places.once[parseInt(numLast)] : places.tence[numPart[numPart.length - 2]] + " " + places.once[numPart[numPart.length - 1]]);
-      result.unshift(numPart[2] ? places.once[parseInt(numPart[0])] + " Hunderd " : "");
+      result.unshift(numPart[2] ? places.once[parseInt(numPart[0])] + " Hundred " : "");
     }
   } else {
     let increase = 0;
