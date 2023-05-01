@@ -43,17 +43,14 @@ function convert() {
       let regex = new RegExp(regexstring);
       let numPart = num.match(regex)[0];
       let numLast = numPart.match(/\d{1,2}$/)[0];
-      result.unshift(i + 1 > 3 ? " " + places.inu[Math.floor((i + 1) / 3)] + " " : "");
-      result.unshift(numLast < 19 ? places.once[parseInt(numLast)] : places.tence[numPart[numPart.length - 2]] + " " + places.once[numPart[numPart.length - 1]]);
-      result.unshift(numPart[2] ? places.once[parseInt(numPart[0])] + " Hundred " : "");
+      if (numPart !== "000") {
+        result.unshift(i + 1 > 3 ? " " + places.inu[Math.floor((i + 1) / 3)] + " " : "");
+        result.unshift(numLast < 19 ? places.once[parseInt(numLast)] : places.tence[numPart[numPart.length - 2]] + " " + places.once[numPart[numPart.length - 1]]);
+        result.unshift(numPart[2] ? places.once[parseInt(numPart[0])] + " Hundred " : "");
+      }
     }
   } else {
     let increase = 0;
-    function solve(number, isHundered, isThousandOrMore) {
-      if (isThousandOrMore) increase++;
-      if (number[0] < 20) result.unshift(places.once[parseInt(number[0])] + (isHundered ? " Hundred " : isThousandOrMore ? " " + places.ins[increase] + " " : ""));
-      else result.unshift(places.tence[number[0][0]] + " " + places.once[number[0][1]] + (isThousandOrMore ? " " + places.ins[increase] + " " : ""));
-    }
 
     let times = 1;
     for (let i = 0; i <= num.length; i += 2) {
@@ -76,7 +73,17 @@ function convert() {
       }
       times++;
     }
+
+    function solve(number, isHundered, isThousandOrMore) {
+      console.log(number[0]);
+      if (isThousandOrMore) increase++;
+      if (number[0] === "00" || number[0] === "0") return;
+      if (number[0] < 20) result.unshift(places.once[parseInt(number[0])] + (isHundered ? " Hundred " : isThousandOrMore ? " " + places.ins[increase] + " " : ""));
+      else result.unshift(places.tence[number[0][0]] + " " + places.once[number[0][1]] + (isThousandOrMore ? " " + places.ins[increase] + " " : ""));
+    }
   }
+
+  result = result.filter((value) => value);
 
   output.textContent = result.join("");
 }
